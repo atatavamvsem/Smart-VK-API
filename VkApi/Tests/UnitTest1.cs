@@ -1,17 +1,13 @@
 using Aquality.Selenium.Browsers;
 using NUnit.Framework;
+using System.Collections.Generic;
+using Tests;
+using VkApi.DataEntities;
 
 namespace VkApi
 {
-    public class Tests
+    internal class Tests : BaseTest
     {
-        [SetUp]
-        public void Setup()
-        {
-            AqualityServices.Browser.GoTo("https://vk.com/");
-            //AqualityServices.Browser.Maximize();
-        }
-
         [Test]
         public void Test1()
         {
@@ -19,6 +15,11 @@ namespace VkApi
             infoPage.TypePassword();
             infoPage.TypeEmail();
             infoPage.ClickAcceptButton();
+            var feedPage = new FeedPage();
+            feedPage.ClickAcceptButton();
+
+            HTTPUtils.CreatePostPostsRequest();
+            ResponseId listPosts = HTTPUtils.CreateResponse<ResponseId>();
         }
 
         [TearDown]
