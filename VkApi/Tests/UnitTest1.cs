@@ -20,6 +20,9 @@ namespace VkApi
 
             HTTPUtils.CreatePostPostsRequest();
             ResponseId listPosts = HTTPUtils.CreateResponse<ResponseId>();
+            var userPage = new UserPage();
+
+            Assert.IsTrue(userPage.GetPost(listPosts.PostId.ToString()));
         }
 
         [TearDown]

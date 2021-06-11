@@ -49,8 +49,8 @@ namespace VkApi
         {
             //не знаю или можно здесь упростить, потому что response нужна для других методов
             response = client.Execute(request);
-            ResponseId ff = JsonConverter.CreateFromJson<ResponseId>(response.Content.ToString());
-            return new JsonSerializer().Deserialize<T>(response);
+            return JsonConverter.CreateFromJson<T>(response.Content.ToString());
+            //return new JsonSerializer().Deserialize<T>(response);
         }
 
         public static HttpStatusCode GetStatusCode()
