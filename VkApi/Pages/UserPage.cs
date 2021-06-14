@@ -26,5 +26,11 @@ namespace VkApi
             }
             
         }
+
+        internal void ClickImage()
+        {
+            IButton AcceptButton = ElementFactory.GetButton(By.XPath("//a[@href='/photo627657327_457241217']"), "Accept button");
+            AcceptButton.ClickAndWait();
+        }
     }
 }

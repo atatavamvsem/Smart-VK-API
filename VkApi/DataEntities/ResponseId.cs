@@ -8,6 +8,6 @@ namespace VkApi.DataEntities
     class ResponseId
     {
         [JsonProperty("response")]
-        public Post PostId { get; set; }
+        public Post Response { get; set; }
     }
 }

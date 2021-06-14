@@ -1,6 +1,10 @@
 using Aquality.Selenium.Browsers;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Resources;
+using System.Text;
 using Tests;
 using VkApi.DataEntities;
 
@@ -8,6 +12,7 @@ namespace VkApi
 {
     internal class Tests : BaseTest
     {
+        private static readonly ResourceManager TestData = Resources.TestData.ResourceManager;
         [Test]
         public void Test1()
         {
@@ -22,7 +27,16 @@ namespace VkApi
             ResponseId listPosts = HTTPUtils.CreateResponse<ResponseId>();
             var userPage = new UserPage();
 
-            Assert.IsTrue(userPage.GetPost(listPosts.PostId.ToString()));
+            //Assert.IsTrue(userPage.GetPost(listPosts.PostId.ToString()));
+
+
+            //HTTPUtils.UploadPhoto(listPosts.Response.PostId.ToString());
+
+            userPage.ClickImage();
+
+            HTTPUtils.DownloadPhoto();
+            
+
         }
 
         [TearDown]
@@ -30,7 +44,7 @@ namespace VkApi
         {
             if (AqualityServices.IsBrowserStarted)
             {
-                //AqualityServices.Browser.Quit();
+                AqualityServices.Browser.Quit();
             }
         }
     }
