@@ -8,15 +8,15 @@ namespace VkApi
 {
     public class FeedPage : BaseAppForm
     {
-        private IButton AcceptButton => ElementFactory.GetButton(By.XPath("//li[@id='l_pr']"), "Accept button");
+        private IButton MyPageButton => ElementFactory.GetButton(By.XPath("//li[@id='l_pr']"), "Accept button");
 
-        public FeedPage() : base(By.XPath("//div[@class='game view']"), "Information page")
+        public FeedPage() : base(By.XPath("//div[@id='feed_rmenu']"), "Information page")
         {
         }
 
-        public void ClickAcceptButton()
+        public void ClickMyPageButton()
         {
-            AcceptButton.ClickAndWait();
+            MyPageButton.ClickAndWait();
         }
     }
 }

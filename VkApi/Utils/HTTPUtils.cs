@@ -4,114 +4,131 @@ using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Serialization.Json;
 using System;
+using System.IO;
 using System.Net;
 using System.Resources;
 using System.Text;
 using VkApi;
 using VkApi.DataEntities;
+using VkApi.Resources;
 
 namespace VkApi
 {
     class HTTPUtils
     {
+        private static readonly ResourceManager TestData = Resources.TestData.ResourceManager;
+        private static string userId = TestData.GetString("userId");
+        private static string accessToken = TestData.GetString("accessToken");
+        private static string version = TestData.GetString("version");
+
         static IRestClient client;
         static IRestRequest request;
         static IRestResponse response;
+        static JObject responseJ;
         //readonly static ResourceManager resourceManager = confData.ResourceManager;
-        AutoItX3 autoIt = new AutoItX3();
 
         public static void CreateClient()
         {
-            client = new RestClient($"https://api.vk.com/method/");
+            client = new RestClient(TestData.GetString("apiUrl"));
         }
 
-
-        public static void CreateGetPostsRequest()
+        public static string CreatePost(string postText)
         {
-            request = new RestRequest($"posts", Method.GET);
-        }
-
-        public static void CreatePostPostsRequest()
-        {
-            request = new RestRequest($"wall.post?owner_id=627657327&message=hi!&access_token=e10dbce942d3f97aa07321717f1880ac3b50db8d883f6af264b63533691394c27b933c13755362fe81209&v=5.131", Method.POST);
-        }
-
-        internal static void DownloadPhoto()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void CreateGetPostsRequestWithParam(string content)
-        {
-            request = new RestRequest($"posts/{content}", Method.GET);
-        }
-
-        internal static void UploadPhoto(string postId)
-        {
-            var c = new WebClient();
-            String u2 = new String("https://pu.vk.com/c516136/ss2254/upload.php?act=do_add&mid=627657327&aid=-14&gid=0&hash=846c8923f4b8db02cbab56cdc4247afe&rhash=4e3207058bfd8eb3d0e0e8771b251469&swfupload=1&api=1&wallphoto=1");
-            var r2 = Encoding.UTF8.GetString(c.UploadFile(u2, "POST", "C:\\a.jpg"));
-
-            var j2 = JsonConvert.DeserializeObject(r2) as JObject;
-            //
-            var u3 = "https://api.vk.com/method/photos.saveWallPhoto?access_token=e10dbce942d3f97aa07321717f1880ac3b50db8d883f6af264b63533691394c27b933c13755362fe81209&v=5.131"
-                     + "&server=" + j2["server"]
-                     + "&photo=" + j2["photo"]
-                     + "&hash=" + j2["hash"];
-            var r3 = c.DownloadString(u3);
-            var j3 = JsonConvert.DeserializeObject(r3) as JObject;
-
-            var u4 = "https://api.vk.com/method/wall.edit?access_token=e10dbce942d3f97aa07321717f1880ac3b50db8d883f6af264b63533691394c27b933c13755362fe81209&v=5.131"
-             + "&owner_id" + j3["response"][0]["owner_id"]
-             + "&post_id=" + postId
-             + "&message=" + "hi"
-             + "&attachments=photo"+ j3["response"][0]["owner_id"] + "_"+ j3["response"][0]["id"];
-            var r4 = c.DownloadString(u4);
-            //client = new RestClient($"https://api.vk.com/method/");
-            //request = new RestRequest($"https://pu.vk.com/c516136/ss2254/upload.php?act=do_add&mid=627657327&aid=-14&gid=0&hash=846c8923f4b8db02cbab56cdc4247afe&rhash=4e3207058bfd8eb3d0e0e8771b251469&swfupload=1&api=1&wallphoto=1", Method.POST);
-            //request.AlwaysMultipartFormData = true;
-
-            //request.AddHeader("Content-Type", "multipart/form-data");
-            //request.AddFile("image", "C:\\a.jpg", "multipart/form-data");
+            request = new RestRequest($"wall.post?"
+                + "v=" + version
+                + "&access_token=" + accessToken
+                + "&owner_id=" + userId
+                + "&message=" + postText, Method.POST);
             //response = client.Execute(request);
+            responseJ = JsonConvert.DeserializeObject(client.Execute(request).Content.ToString()) as JObject;
+            return (string)responseJ["response"]["post_id"];
         }
 
-        public static void CreateGetUsersRequest()
+        public static void CreateComment(string comment, string postId)
         {
-            request = new RestRequest($"users", Method.GET);
+            request = new RestRequest($"wall.createComment?"
+                + "v=" + version
+                + "&access_token=" + accessToken
+                + "&owner_id=" + userId
+                + "&message=" + comment
+                + "&post_id=" + postId, Method.POST);
+            client.Execute(request);
         }
 
-        public static void CreateGetUsersRequestWithParam(string content)
+        internal static void DownloadPhoto(string url)
         {
-            request = new RestRequest($"users/{content}", Method.GET);
+            var fileBytes = client.DownloadData(new RestRequest(url, Method.GET));
+            File.WriteAllBytes(Path.Combine("D:\\", "b.jpg"), fileBytes);
         }
 
-        public static T CreateResponse<T>()
+        internal static void ChangePost(string postText,string postId)
         {
-            //не знаю или можно здесь упростить, потому что response нужна для других методов
+            responseJ = GetUploadServer();
+            responseJ = UploadPhoto(responseJ);
+            responseJ = SaveWallPhoto(responseJ);
+            EditPost(responseJ, postId, postText);
+        }
+
+        private static void EditPost(JObject responseJ, string postId, string postText)
+        {
+            request = new RestRequest($"wall.edit?"
+                + "v=" + version
+                + "&access_token=" + accessToken
+                + "&owner_id=" + userId
+                + "&post_id=" + postId
+                + "&message=" + postText
+                + "&attachments=photo" + responseJ["response"][0]["owner_id"] + "_" + responseJ["response"][0]["id"], Method.GET);
+            client.Execute(request);
+        }
+
+        internal static void DeleatePost(string postId)
+        {
+            request = new RestRequest($"wall.delete?"
+                + "v=" + version
+                + "&access_token=" + accessToken
+                + "&owner_id=" + userId
+                + "&post_id=" + postId, Method.GET);
             response = client.Execute(request);
-            return JsonConverter.CreateFromJson<T>(response.Content.ToString());
-            //return new JsonSerializer().Deserialize<T>(response);
         }
 
-        public static HttpStatusCode GetStatusCode()
+        private static JObject SaveWallPhoto(JObject responseJ)
         {
-            return response.StatusCode;
+            request = new RestRequest($"photos.saveWallPhoto?"
+                + "v=" + version
+                + "&access_token=" + accessToken
+                + "&server=" + responseJ["server"]
+                + "&photo=" + responseJ["photo"]
+                + "&hash=" + responseJ["hash"], Method.POST);
+            return JsonConvert.DeserializeObject(client.Execute(request).Content.ToString()) as JObject;
         }
 
-        public static string GetResponseContentType()
+        private static JObject UploadPhoto(JObject responseJ)
         {
-            return response.ContentType;
+            var webClient = new WebClient();
+            var response = Encoding.UTF8.GetString(webClient.UploadFile((string)responseJ["response"]["upload_url"], "POST", "C:\\c.jpg"));
+            return JsonConvert.DeserializeObject(response) as JObject;
         }
 
-        public static string GetResponseContent()
+        private static JObject GetUploadServer()
         {
-            return response.Content;
+            request = new RestRequest($"photos.getWallUploadServer?"
+                + "v=" + version
+                + "&access_token=" + accessToken
+                + "&owner_id=" + userId, Method.POST);
+            response = client.Execute(request);
+            return JsonConvert.DeserializeObject(response.Content.ToString()) as JObject;
         }
 
-        public static void AddJsonBodyToRequest<T>(T addedPost)
+        public static string GetLikes(string postId)
         {
-            //request.AddJsonBody(JsonConvertUtil.SerializeObj(addedPost));
+            request = new RestRequest($"likes.getList?"
+                + "v=" + version
+                + "&type=post"
+                + "&access_token=" + accessToken
+                + "&owner_id=" + userId
+                + "&item_id=" + postId, Method.GET);
+            responseJ = JsonConvert.DeserializeObject(client.Execute(request).Content.ToString()) as JObject;
+            return (string)responseJ["response"]["items"][0];
         }
     }
 }

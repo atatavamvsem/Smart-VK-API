@@ -61,11 +61,38 @@ namespace VkApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https:\/\/pu.vk.com\/c516136\/ss2254\/upload.php?act=do_add&amp;mid=627657327&amp;aid=-14&amp;gid=0&amp;hash=846c8923f4b8db02cbab56cdc4247afe&amp;rhash=4e3207058bfd8eb3d0e0e8771b251469&amp;swfupload=1&amp;api=1&amp;wallphoto=1.
+        ///   Looks up a localized string similar to e10dbce942d3f97aa07321717f1880ac3b50db8d883f6af264b63533691394c27b933c13755362fe81209.
         /// </summary>
-        internal static string url {
+        internal static string accessToken {
             get {
-                return ResourceManager.GetString("url", resourceCulture);
+                return ResourceManager.GetString("accessToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://api.vk.com/method/.
+        /// </summary>
+        internal static string apiUrl {
+            get {
+                return ResourceManager.GetString("apiUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 627657327.
+        /// </summary>
+        internal static string userId {
+            get {
+                return ResourceManager.GetString("userId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5.131.
+        /// </summary>
+        internal static string version {
+            get {
+                return ResourceManager.GetString("version", resourceCulture);
             }
         }
     }

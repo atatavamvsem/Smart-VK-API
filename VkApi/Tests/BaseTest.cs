@@ -20,5 +20,13 @@ namespace Tests
             HTTPUtils.CreateClient();
         }
 
+        [TearDown]
+        public void CleanUp()
+        {
+            if (AqualityServices.IsBrowserStarted)
+            {
+                AqualityServices.Browser.Quit();
+            }
+        }
     }
 }

@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="url" xml:space="preserve">
-    <value>https:\/\/pu.vk.com\/c516136\/ss2254\/upload.php?act=do_add&amp;mid=627657327&amp;aid=-14&amp;gid=0&amp;hash=846c8923f4b8db02cbab56cdc4247afe&amp;rhash=4e3207058bfd8eb3d0e0e8771b251469&amp;swfupload=1&amp;api=1&amp;wallphoto=1</value>
+  <data name="accessToken" xml:space="preserve">
+    <value>e10dbce942d3f97aa07321717f1880ac3b50db8d883f6af264b63533691394c27b933c13755362fe81209</value>
+  </data>
+  <data name="apiUrl" xml:space="preserve">
+    <value>https://api.vk.com/method/</value>
+  </data>
+  <data name="userId" xml:space="preserve">
+    <value>627657327</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>5.131</value>
   </data>
 </root>
