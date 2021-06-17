@@ -79,6 +79,87 @@ namespace VkApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to D:\\b.jpg.
+        /// </summary>
+        internal static string imageDownload {
+            get {
+                return ResourceManager.GetString("imageDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C:\\c.jpg.
+        /// </summary>
+        internal static string imageUpload {
+            get {
+                return ResourceManager.GetString("imageUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5.
+        /// </summary>
+        internal static string lenghtRandomString {
+            get {
+                return ResourceManager.GetString("lenghtRandomString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to +375291660762.
+        /// </summary>
+        internal static string login {
+            get {
+                return ResourceManager.GetString("login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to b.jpg.
+        /// </summary>
+        internal static string nameImageDownload {
+            get {
+                return ResourceManager.GetString("nameImageDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PuV6j_.2&amp;$m9h?UYY.
+        /// </summary>
+        internal static string password {
+            get {
+                return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D:\\.
+        /// </summary>
+        internal static string pathDownload {
+            get {
+                return ResourceManager.GetString("pathDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://vk.com/id627657327.
+        /// </summary>
+        internal static string postAuthor {
+            get {
+                return ResourceManager.GetString("postAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://vk.com/.
+        /// </summary>
+        internal static string URL {
+            get {
+                return ResourceManager.GetString("URL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 627657327.
         /// </summary>
         internal static string userId {

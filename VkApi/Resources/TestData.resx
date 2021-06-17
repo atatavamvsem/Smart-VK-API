@@ -123,6 +123,33 @@
   <data name="apiUrl" xml:space="preserve">
     <value>https://api.vk.com/method/</value>
   </data>
+  <data name="imageDownload" xml:space="preserve">
+    <value>D:\\b.jpg</value>
+  </data>
+  <data name="imageUpload" xml:space="preserve">
+    <value>C:\\c.jpg</value>
+  </data>
+  <data name="lenghtRandomString" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>+375291660762</value>
+  </data>
+  <data name="nameImageDownload" xml:space="preserve">
+    <value>b.jpg</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>PuV6j_.2&amp;$m9h?UYY</value>
+  </data>
+  <data name="pathDownload" xml:space="preserve">
+    <value>D:\\</value>
+  </data>
+  <data name="postAuthor" xml:space="preserve">
+    <value>https://vk.com/id627657327</value>
+  </data>
+  <data name="URL" xml:space="preserve">
+    <value>https://vk.com/</value>
+  </data>
   <data name="userId" xml:space="preserve">
     <value>627657327</value>
   </data>

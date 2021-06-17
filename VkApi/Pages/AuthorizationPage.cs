@@ -4,11 +4,13 @@ using Aquality.Selenium.Elements.Interfaces;
 using OpenQA.Selenium;
 using System.Threading;
 using Aquality.Selenium.Configurations;
+using System.Resources;
 
 namespace VkApi
 {
     public class AuthorizationPage : BaseAppForm
     {
+        private static readonly ResourceManager TestData = Resources.TestData.ResourceManager;
         private ITextBox PasswordInput => ElementFactory.GetTextBox(By.XPath("//input[@id='index_pass']"), "Password");
         private ITextBox EmailInput => ElementFactory.GetTextBox(By.XPath("//input[@id='index_email']"), "Email");
         private IButton AcceptButton => ElementFactory.GetButton(By.XPath("//button[@id='index_login_button']"), "Accept button");
@@ -19,12 +21,12 @@ namespace VkApi
 
         public void TypePassword()
         {
-            PasswordInput.ClearAndType("PuV6j_.2&$m9h?UYY");
+            PasswordInput.ClearAndType(TestData.GetString("password"));
         }
 
         public void TypeEmail()
         {
-            EmailInput.ClearAndType("+375291660762");
+            EmailInput.ClearAndType(TestData.GetString("login"));
         }
 
         public void ClickAcceptButton()

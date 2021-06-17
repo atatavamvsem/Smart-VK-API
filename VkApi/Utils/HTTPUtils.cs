@@ -1,16 +1,10 @@
-﻿using AutoItX3Lib;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
-using RestSharp.Serialization.Json;
-using System;
 using System.IO;
 using System.Net;
 using System.Resources;
 using System.Text;
-using VkApi;
-using VkApi.DataEntities;
-using VkApi.Resources;
 
 namespace VkApi
 {
@@ -58,7 +52,7 @@ namespace VkApi
         internal static void DownloadPhoto(string url)
         {
             var fileBytes = client.DownloadData(new RestRequest(url, Method.GET));
-            File.WriteAllBytes(Path.Combine("D:\\", "b.jpg"), fileBytes);
+            File.WriteAllBytes(Path.Combine(TestData.GetString("pathDownload"), TestData.GetString("nameImageDownload")), fileBytes);
         }
 
         internal static void ChangePost(string postText,string postId)
@@ -77,7 +71,8 @@ namespace VkApi
                 + "&owner_id=" + userId
                 + "&post_id=" + postId
                 + "&message=" + postText
-                + "&attachments=photo" + responseJ["response"][0]["owner_id"] + "_" + responseJ["response"][0]["id"], Method.GET);
+                + "&attachments=photo" + responseJ["response"][0]["owner_id"] 
+                + "_" + responseJ["response"][0]["id"], Method.GET);
             client.Execute(request);
         }
 
@@ -105,7 +100,7 @@ namespace VkApi
         private static JObject UploadPhoto(JObject responseJ)
         {
             var webClient = new WebClient();
-            var response = Encoding.UTF8.GetString(webClient.UploadFile((string)responseJ["response"]["upload_url"], "POST", "C:\\c.jpg"));
+            var response = Encoding.UTF8.GetString(webClient.UploadFile((string)responseJ["response"]["upload_url"], "POST", TestData.GetString("imageUpload")));
             return JsonConvert.DeserializeObject(response) as JObject;
         }
 

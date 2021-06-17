@@ -7,16 +7,18 @@ using System.Net;
 using RestSharp.Serialization.Json;
 using VkApi;
 using Aquality.Selenium.Browsers;
+using System.Resources;
 
-namespace Tests
+namespace VkApi
 {
     internal class BaseTest
     {
+        private static readonly ResourceManager TestData = Resources.TestData.ResourceManager;
 
         [SetUp]
         public void Setup()
         {
-            AqualityServices.Browser.GoTo("https://vk.com/");
+            AqualityServices.Browser.GoTo(TestData.GetString("URL"));
             HTTPUtils.CreateClient();
         }
 

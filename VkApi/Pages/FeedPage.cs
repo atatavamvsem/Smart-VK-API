@@ -8,9 +8,9 @@ namespace VkApi
 {
     public class FeedPage : BaseAppForm
     {
-        private IButton MyPageButton => ElementFactory.GetButton(By.XPath("//li[@id='l_pr']"), "Accept button");
+        private IButton MyPageButton => ElementFactory.GetButton(By.XPath("//li[@id='l_pr']"), "MyPage button");
 
-        public FeedPage() : base(By.XPath("//div[@id='feed_rmenu']"), "Information page")
+        public FeedPage() : base(By.XPath("//div[@id='feed_rmenu']"), "Feed page")
         {
         }
 
