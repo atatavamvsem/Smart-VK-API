@@ -5,10 +5,11 @@ using OpenQA.Selenium;
 using System.Threading;
 using Aquality.Selenium.Configurations;
 using System.Resources;
+using Aquality.Selenium.Forms;
 
 namespace VkApi
 {
-    public class AuthorizationPage : BaseAppForm
+    public class AuthorizationPage : Form
     {
         private static readonly ResourceManager TestData = Resources.TestData.ResourceManager;
         private ITextBox PasswordInput => ElementFactory.GetTextBox(By.XPath("//input[@id='index_pass']"), "Password");

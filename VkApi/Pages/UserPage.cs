@@ -1,4 +1,5 @@
 ﻿using Aquality.Selenium.Elements.Interfaces;
+using Aquality.Selenium.Forms;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using VkApi.DataEntities;
 
 namespace VkApi
 {
-    class UserPage : BaseAppForm
+    class UserPage : Form
     {
         private static readonly ResourceManager TestData = Resources.TestData.ResourceManager;
         private string userId = TestData.GetString("userId");
@@ -66,7 +67,7 @@ namespace VkApi
             CloseButton.ClickAndWait();
         }
 
-        internal string GetUrl()
+        internal string GetUrlImageFromPost()
         {
             return OpenOriginalButton.GetAttribute("href");
         }

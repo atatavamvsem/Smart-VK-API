@@ -47,7 +47,7 @@ namespace VkApi
 
             userPage.ClickImage(postId);
             userPage.ClickActionMore();
-            HTTPUtils.DownloadPhoto(userPage.GetUrl());
+            HTTPUtils.DownloadPhoto(userPage.GetUrlImageFromPost());
             userPage.ClickCloseButton();
 
             Assert.Multiple(() =>

@@ -19,7 +19,7 @@ namespace VkApi
         public void Setup()
         {
             AqualityServices.Browser.GoTo(TestData.GetString("URL"));
-            HTTPUtils.CreateClient();
+            HTTPUtils.CreateRestClient(TestData.GetString("apiUrl"));
         }
 
         [TearDown]

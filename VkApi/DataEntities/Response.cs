@@ -5,9 +5,9 @@ using System.Text;
 
 namespace VkApi.DataEntities
 {
-    class ResponseId
+    class Response
     {
         [JsonProperty("response")]
-        public Post Response { get; set; }
+        public Post Post { get; set; }
     }
 }

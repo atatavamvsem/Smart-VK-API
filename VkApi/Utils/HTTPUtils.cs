@@ -11,6 +11,7 @@ namespace VkApi
     class HTTPUtils
     {
         private static readonly ResourceManager TestData = Resources.TestData.ResourceManager;
+
         private static string userId = TestData.GetString("userId");
         private static string accessToken = TestData.GetString("accessToken");
         private static string version = TestData.GetString("version");
@@ -19,33 +20,22 @@ namespace VkApi
         static IRestRequest request;
         static IRestResponse response;
         static JObject responseJ;
-        //readonly static ResourceManager resourceManager = confData.ResourceManager;
 
-        public static void CreateClient()
+        public static void CreateRestClient(string apiUrl)
         {
-            client = new RestClient(TestData.GetString("apiUrl"));
+            client = new RestClient(apiUrl);
         }
 
         public static string CreatePost(string postText)
         {
-            request = new RestRequest($"wall.post?"
-                + "v=" + version
-                + "&access_token=" + accessToken
-                + "&owner_id=" + userId
-                + "&message=" + postText, Method.POST);
-            //response = client.Execute(request);
+            request = new RestRequest(GenerateRequestMethod.CreateWallPostRequest(version, accessToken, userId, postText), Method.POST);
             responseJ = JsonConvert.DeserializeObject(client.Execute(request).Content.ToString()) as JObject;
             return (string)responseJ["response"]["post_id"];
         }
 
         public static void CreateComment(string comment, string postId)
         {
-            request = new RestRequest($"wall.createComment?"
-                + "v=" + version
-                + "&access_token=" + accessToken
-                + "&owner_id=" + userId
-                + "&message=" + comment
-                + "&post_id=" + postId, Method.POST);
+            request = new RestRequest(GenerateRequestMethod.CreateWallCreatCommentRequest(version, accessToken, userId, comment, postId), Method.POST);
             client.Execute(request);
         }
 
@@ -65,35 +55,19 @@ namespace VkApi
 
         private static void EditPost(JObject responseJ, string postId, string postText)
         {
-            request = new RestRequest($"wall.edit?"
-                + "v=" + version
-                + "&access_token=" + accessToken
-                + "&owner_id=" + userId
-                + "&post_id=" + postId
-                + "&message=" + postText
-                + "&attachments=photo" + responseJ["response"][0]["owner_id"] 
-                + "_" + responseJ["response"][0]["id"], Method.GET);
+            request = new RestRequest(GenerateRequestMethod.CreateWallEditRequest(version, accessToken, userId, postText, postId, responseJ["response"][0]["owner_id"], responseJ["response"][0]["id"]), Method.GET);
             client.Execute(request);
         }
 
         internal static void DeleatePost(string postId)
         {
-            request = new RestRequest($"wall.delete?"
-                + "v=" + version
-                + "&access_token=" + accessToken
-                + "&owner_id=" + userId
-                + "&post_id=" + postId, Method.GET);
+            request = new RestRequest(GenerateRequestMethod.CreateWallDeleteRequest(version, accessToken, userId, postId), Method.GET);
             response = client.Execute(request);
         }
 
         private static JObject SaveWallPhoto(JObject responseJ)
         {
-            request = new RestRequest($"photos.saveWallPhoto?"
-                + "v=" + version
-                + "&access_token=" + accessToken
-                + "&server=" + responseJ["server"]
-                + "&photo=" + responseJ["photo"]
-                + "&hash=" + responseJ["hash"], Method.POST);
+            request = new RestRequest(GenerateRequestMethod.CreatePhotoSaveRequest(version, accessToken, responseJ["server"], responseJ["photo"], responseJ["hash"]), Method.POST);
             return JsonConvert.DeserializeObject(client.Execute(request).Content.ToString()) as JObject;
         }
 
@@ -106,22 +80,14 @@ namespace VkApi
 
         private static JObject GetUploadServer()
         {
-            request = new RestRequest($"photos.getWallUploadServer?"
-                + "v=" + version
-                + "&access_token=" + accessToken
-                + "&owner_id=" + userId, Method.POST);
+            request = new RestRequest(GenerateRequestMethod.CreatePhotoGetServerRequest(version, accessToken, userId), Method.POST);
             response = client.Execute(request);
             return JsonConvert.DeserializeObject(response.Content.ToString()) as JObject;
         }
 
         public static string GetLikes(string postId)
         {
-            request = new RestRequest($"likes.getList?"
-                + "v=" + version
-                + "&type=post"
-                + "&access_token=" + accessToken
-                + "&owner_id=" + userId
-                + "&item_id=" + postId, Method.GET);
+            request = new RestRequest(GenerateRequestMethod.CreateLikesGetListRequest(version, accessToken, userId, postId), Method.GET);
             responseJ = JsonConvert.DeserializeObject(client.Execute(request).Content.ToString()) as JObject;
             return (string)responseJ["response"]["items"][0];
         }

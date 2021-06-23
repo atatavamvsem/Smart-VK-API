@@ -34,6 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\RequestItems.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestItems.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\testData.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -42,6 +47,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\RequestItems.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestItems.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\TestData.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>testData.Designer.cs</LastGenOutput>
